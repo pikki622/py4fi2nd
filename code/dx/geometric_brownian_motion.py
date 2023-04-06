@@ -59,14 +59,11 @@ class geometric_brownian_motion(simulation_class):
         paths = np.zeros((M, I))
         # initialize first date with initial_value
         paths[0] = self.initial_value
-        if not self.correlated:
-            # if not correlated, generate random numbers
-            rand = sn_random_numbers((1, M, I),
-                                     fixed_seed=fixed_seed)
-        else:
-            # if correlated, use random number object as provided
-            # in market environment
-            rand = self.random_numbers
+        rand = (
+            self.random_numbers
+            if self.correlated
+            else sn_random_numbers((1, M, I), fixed_seed=fixed_seed)
+        )
         short_rate = self.discount_curve.short_rate
         # get short rate for drift of process
         for t in range(1, len(self.time_grid)):
