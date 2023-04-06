@@ -52,8 +52,7 @@ class valuation_mcs_european(valuation_class):
         # minimum value over whole path
         min_value = np.min(paths[:time_index], axis=0)
         try:
-            payoff = eval(self.payoff_func)
-            return payoff
+            return eval(self.payoff_func)
         except:
             print('Error evaluating payoff function.')
 
